@@ -1,0 +1,76 @@
+<!--
+@license
+Copyright (c) 2015 Peter Kaske <p.kaske@gmail.com>. All rights reserved.
+This code may only be used under the MIT license found at http://opensource.org/licenses/MIT.
+Or see the LICENSE file that comes with this code.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>f-i18n demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../f-i18n.html">
+    <link rel="import" href="../f-i18n-domain.html">
+  </head>
+  <body>
+    <!-- Provides the 'default' domain -->
+    <!-- Will not fetch anything until locale is specified -->
+    <f-i18n-domain id="i18nDomain"
+      messages-url="locales">
+    </f-i18n-domain>
+
+    <!-- Provides the 'demo-domain' domain -->
+    <f-i18n-domain id="demoDomain"
+      domain="demo-domain"
+      messages-url="locales">
+    </f-i18n-domain>
+
+    <div>
+      <label for="langSelector">Choose language for default domain</label>
+      <select id="langSelector">
+        <option></option>
+        <option>en</option>
+        <option>fr</option>
+        <option>bad</option>
+        <option>404</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="langSelectorDomain">Choose language for 'demo-domain' domain</label>
+      <select id="langSelectorDomain">
+        <option></option>
+        <option>en</option>
+        <option>de</option>
+      </select>
+    </div>
+
+    <p style="margin-top: 50px;">Locale domain: <strong>default</strong></p>
+
+    <!-- demo of provider -->
+    <template is="dom-bind">
+      <f-i18n provider msgid="welcome" value="{{welcome}}" placeholder="This is placeholder text, working in provider mode"></f-i18n>
+      <p>[[welcome]]</p>
+    </template>
+
+    <p style="margin-top: 50px;">Locale domain: <strong>demo-domain</strong></p>
+    <f-i18n m="demo-domain.special" placeholder="This is placeholder text in simple mode"></f-i18n>
+
+    <script>
+      let i18nDomain = document.querySelector('#i18nDomain');
+      let demoDomain = document.querySelector('#demoDomain');
+      let langSelector = document.querySelector('#langSelector');
+      let langSelectorDemo = document.querySelector('#langSelectorDomain');
+
+      langSelector.addEventListener('change', function() {
+        i18nDomain.locale = this.value;
+      });
+
+      langSelectorDemo.addEventListener('change', function() {
+        demoDomain.locale = this.value;
+      });
+    </script>
+  </body>
+</html>

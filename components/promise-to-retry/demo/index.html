@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>promise-to-retry Demo</title>
+    <link rel="import" href="../promise-to-retry.html">
+  </head>
+  <body>
+
+    <p>An example of <code>&lt;promise-to-retry&gt;</code>:</p>
+
+    <button id="successful">Successful promise with .ensure method</button>
+    <button id="failing">5 times failing promise with .ensure method</button>
+
+    <script>
+
+      document.querySelector('#successful').addEventListener('click', function() {
+        PromiseToRetry.ensure(function() {
+          return new Promise(function(resolve) {
+            resolve('Resolve from #successful!');
+          });
+        }).then(appendP);
+      });
+
+      document.querySelector('#failing').addEventListener('click', function() {
+        var numTries = 0;
+        PromiseToRetry.ensure(function() {
+          return new Promise(function(resolve, reject) {
+            if (++numTries > 5) resolve('Resolve from #failing!');
+            else reject('some error ' + numTries);
+          });
+        }, appendP).then(appendP);
+      });
+
+      var appendP = function(text) {
+        var newNode = document.createElement('p');
+        newNode.innerHTML = JSON.stringify(text);
+        document.querySelector('body').appendChild(newNode);
+      };
+
+    </script>
+
+  </body>
+</html>
