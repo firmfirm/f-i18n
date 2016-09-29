@@ -1,5 +1,6 @@
 language: node_js
-sudo: false
+sudo: required
+dist: trusty
 before_script:
 - npm install -g bower polylint web-component-tester
 - bower install
@@ -10,7 +11,6 @@ env:
   global:
   - GH_REF: github.com/firmfirm/f-i18n.git
   - secure: WVrQx3gTywj18wAkGT8fNn2S2lzX+47tcojK/JohQlhKVtmuCMf9nyyKlBBQZdFi+ezlyCLaeCRVSfB6wgxWPt/NcbylSaZC5+izz2knNEbIjWBq/DmM+grBUqyCHu2FCrjU1oA2aV7mfgtaU8B7zf0EpE6KFRI2oBvjN1cOu8fiJv4C0idDN/ZgGLup5wkzqzq1hgT9cnMFcM4fZiiSYzXO1Vw/I/hO213G4gbzEvxOGfV/IM+a/ONKz3VrtELr1qEzdxW6IktPK4WhaAKuiDLoGadtsWlAQHGpDvT2SWbk+A8uROF7E79QzSm7zPxkqCDCs6T13Zm6Z3fgzfLH9Gf/HveWxZWQRs2Z2OyO6N8TPX1PL8pY3GaZ4VsdDMkI6BpQFCoSvZUNEaaLl8bI4lIYudBFEYg841iDZOBAzb3mtPhe1z5QOgPA/mLHaXThYZftcebcMM6HoIy2wrNdJW0Kh9FUbnTeh4fnrGISzE+BbTqezRmn5UUDx7Dng6fzeueYZEPlMU3p8vt+OABIzJ0wCXiKYF0txNRMi95CHYv+zTmrJsVsDLiNYQ6QnCIfYkC+k9VP/nTcChlXPLQHgmiJhcBXwFEC5vm0316YuJanAoAjxsBpsfq8MVUZKjoxfLDbcsDZI2bxK1NbaI6OLSGzRjqwLX/0kx2lYiTESms=
-  - CXX=g++-4.8
 node_js: stable
 addons:
   firefox: latest
@@ -20,7 +20,6 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - google-chrome-stable
-    - g++-4.8
 script:
 - polylint
 - xvfb-run wct
