@@ -22,7 +22,7 @@ addons:
     - google-chrome-stable
 script:
 - polylint
-- xvfb-run wct
+- xvfb-run wct -l firefox
 deploy:
   skip_cleanup: true
   provider: script
