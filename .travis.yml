@@ -2,7 +2,7 @@ language: node_js
 sudo: required
 dist: trusty
 before_script:
-- npm install -g bower polylint web-component-tester
+- npm install -g bower web-component-tester
 - bower install
 branches:
   except:
@@ -21,7 +21,6 @@ addons:
     packages:
     - google-chrome-stable
 script:
-- polylint
 - xvfb-run wct -l chrome
 deploy:
   skip_cleanup: true
