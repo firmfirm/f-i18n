@@ -8,7 +8,6 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <link rel="import" href="../f-i18n.html">
-    <link rel="import" href="./fake-f-singleton.html">
   </head>
   <body>
 
@@ -21,16 +20,14 @@
   <script>
     'use strict'
 
-    describe(window.location.href.indexOf('dom=shadow') > -1
-    ? '[shadow] <f-i18n>'
-    : '<f-i18n>', () => {
+    describe('<f-i18n>', () => {
 
       let el, s;
 
       beforeEach(() => {
-        replace('f-singleton').with('fake-f-singleton');
+        replace('f-singleton').with('fake-store');
         el = fixture('f-i18n-fixture');
-        s = el.$$('fake-f-singleton');
+        s = el.root.querySelector('f-singleton');
         s.value = null;
       });
 
@@ -49,7 +46,7 @@
       describe('content', () => {
         let span;
 
-        beforeEach(() => span = el.$$('span'));
+        beforeEach(() => span = el.root.querySelector('span'));
 
         it('[provider] hides content', () => {
           expect(span.hidden).to.be.false;

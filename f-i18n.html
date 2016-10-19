@@ -61,77 +61,77 @@ Element to get and/or display a localized message.
   </template>
 </dom-module>
 <script>
-  Polymer({
-    is: 'f-i18n',
+  class FI18n extends FBehavior.DomPurify(Polymer.Element) {
+    static get is() { return 'f-i18n'; }
+    static get config() {
+      return {
+        properties: {
+          /**
+           * The message id (key) of the message.
+           */
+          msgid: String,
 
-    behaviors: [
-      // Use the dom-purify-behavior to sanitize any html before it goes live.
-      Polymer.DomPurifyBehavior
-    ],
+          /**
+           * `domain` of i18n-domain.
+           */
+          domain: {
+            type: String,
+            value: 'default'
+          },
 
-    properties: {
-      /**
-       * The message id (key) of the message.
-       */
-      msgid: String,
+          /**
+           * Shortcut property for `domain` and `msgid`.
+           * Example: `domain-name.msgid`.
+           */
+          m: {
+            type: String,
+            observer: '_mChanged'
+          },
 
-      /**
-       * `domain` of i18n-domain.
-       */
-      domain: {
-        type: String,
-        value: 'default'
-      },
+          /**
+           * If true, the element doesn't display any content.
+           */
+          provider: {
+            type: Boolean,
+            value: false
+          },
 
-      /**
-       * Shortcut property for `domain` and `msgid`.
-       * Example: `domain-name.msgid`.
-       */
-      m: {
-        type: String,
-        observer: '_mChanged'
-      },
+          /**
+           * Translated message or placeholder value.
+           */
+          value: {
+            type: String,
+            notify: true,
+            computed: '_computeValue(_value, placeholder)'
+          },
 
-      /**
-       * If true, the element doesn't display any content.
-       */
-      provider: {
-        type: Boolean,
-        value: false
-      },
+          /**
+           * Message to use until locale is loaded.
+           */
+          placeholder: {
+            type: String,
+            value: null
+          },
 
-      /**
-       * Translated message or placeholder value.
-       */
-      value: {
-        type: String,
-        notify: true,
-        computed: '_computeValue(_value, placeholder)'
-      },
+          _value: String,
 
-      /**
-       * Message to use until locale is loaded.
-       */
-      placeholder: {
-        type: String,
-        value: null
-      },
+          _messageKey: { computed: '_computeMessageKey(domain, msgid)' }
+        },
+      }
+    }
 
-      _value: String,
-
-      _messageKey: { computed: '_computeMessageKey(domain, msgid)' }
-    },
-
-    _computeValue: function(value, placeholder) {
+    _computeValue(value, placeholder) {
       if (value) return value;
       return placeholder;
-    },
+    }
 
-    _computeMessageKey: function(domain, msgid) {
-      return 'i18n.' + domain + '.' + msgid + '.message';
-    },
+    _computeMessageKey(domain, msgid) {
+      if (domain && msgid) {
+        return 'i18n.' + domain + '.' + msgid + '.message';
+      }
+    }
 
-    _mChanged: function(m) {
+    _mChanged(m) {
       if (!m) return;
       let parts = this.m.split('.');
       if (parts.length > 0) {
@@ -139,5 +139,6 @@ Element to get and/or display a localized message.
         this.msgid = parts.join('.');
       }
     }
-  });
+  }
+  customElements.define(FI18n.is, FI18n);
 </script>

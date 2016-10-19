@@ -10,7 +10,7 @@ Or see the LICENSE file that comes with this code.
     <meta charset="utf-8">
     <title>f-i18n demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../f-i18n.html">
     <link rel="import" href="../f-i18n-domain.html">
   </head>
@@ -50,10 +50,12 @@ Or see the LICENSE file that comes with this code.
     <p style="margin-top: 50px;">Locale domain: <strong>default</strong></p>
 
     <!-- demo of provider -->
-    <template is="dom-bind">
-      <f-i18n provider msgid="welcome" value="{{welcome}}" placeholder="This is placeholder text, working in provider mode"></f-i18n>
-      <p>[[welcome]]</p>
-    </template>
+    <dom-bind>
+      <template>
+        <f-i18n provider msgid="welcome" value="{{welcome}}" placeholder="This is placeholder text, working in provider mode"></f-i18n>
+        <p>[[welcome]]</p>
+      </template>
+    </dom-bind>
 
     <p style="margin-top: 50px;">Locale domain: <strong>demo-domain</strong></p>
     <f-i18n m="demo-domain.special" placeholder="This is placeholder text in simple mode"></f-i18n>
@@ -64,12 +66,12 @@ Or see the LICENSE file that comes with this code.
       let langSelector = document.querySelector('#langSelector');
       let langSelectorDemo = document.querySelector('#langSelectorDomain');
 
-      langSelector.addEventListener('change', function() {
-        i18nDomain.locale = this.value;
+      langSelector.addEventListener('change', function(e) {
+        i18nDomain.locale = e.target.value;
       });
 
-      langSelectorDemo.addEventListener('change', function() {
-        demoDomain.locale = this.value;
+      langSelectorDemo.addEventListener('change', function(e) {
+        demoDomain.locale = e.target.value;
       });
     </script>
   </body>

@@ -3,8 +3,7 @@
 These elements were heavily inspired by [`<i18-n>`](https://github.com/pkaske/i18-n), written by *pkaske*.
 
 - Try out [live demo](https://firmfirm.github.io/f-i18n/components/f-i18n/demo/).
-- Learn more about elements in [component page](https://firmfirm.github.io/f-i18n/).
-- [Run tests](https://firmfirm.github.io/f-i18n/components/f-i18n/test/) in your browser.
+- Learn more about elements in [component page](https://firmfirm.github.io/f-i18n/) (**temporarily not working**).
 
 Using ES6 features, so take care in production.
 

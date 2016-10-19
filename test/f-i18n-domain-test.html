@@ -8,7 +8,6 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <link rel="import" href="../f-i18n-domain.html">
-    <link rel="import" href="./fake-f-singleton.html">
   </head>
   <body>
 
@@ -22,9 +21,7 @@
   <script>
     'use strict'
 
-    describe(window.location.href.indexOf('dom=shadow') > -1
-    ? '[shadow] <f-i18n-domain>'
-    : '<f-i18n-domain>', () => {
+    describe('<f-i18n-domain>', () => {
 
       let el, singleton, server;
       let respond = (cb) => setTimeout(() => {
@@ -34,9 +31,9 @@
 
       beforeEach(() => {
         server = sinon.fakeServer.create();
-        replace('f-singleton').with('fake-f-singleton');
+        replace('f-singleton').with('fake-store');
         el = fixture('f-i18n-domain-fixture');
-        singleton = el.$$('fake-f-singleton');
+        singleton = el.root.querySelector('f-singleton');
         PromiseToRetry.ensure = sinon.stub().callsArg(0);
       });
 
