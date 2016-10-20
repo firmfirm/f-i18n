@@ -61,7 +61,7 @@ Element to get and/or display a localized message.
   </template>
 </dom-module>
 <script>
-  class FI18n extends FBehavior.DomPurify(Polymer.Element) {
+  FirmFirm.I18n = class I18n extends FBehavior.DomPurify(Polymer.Element) {
     static get is() { return 'f-i18n'; }
     static get config() {
       return {
@@ -140,5 +140,5 @@ Element to get and/or display a localized message.
       }
     }
   }
-  customElements.define(FI18n.is, FI18n);
+  customElements.define(FirmFirm.I18n.is, FirmFirm.I18n);
 </script>

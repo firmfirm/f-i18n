@@ -53,53 +53,63 @@ See docs of [`<f-i18n>`](#f-i18n) element.
   </template>
 </dom-module>
 <script>
-  (function () {
+  FirmFirm.I18nDomain = (function () {
+    class I18nDomain extends Polymer.Element {
+      static get is() { return 'f-i18n-domain'; }
+      static get config() {
+        return {
+          properties: {
+            /**
+             * Locale being used.
+             */
+            locale: String,
 
-    Polymer({
-      is: 'f-i18n-domain',
+            /**
+             * Name of i18n messages group.
+             */
+            domain: {
+              type: String,
+              value: 'default'
+            },
 
-      properties: {
-        /**
-         * Locale being used.
-         */
-        locale: String,
+            /**
+             * The path to directory of `[domain]-[locale].json` files.
+             */
+            messagesUrl: {
+              type: String
+            },
 
-        /**
-         * Name of i18n messages group.
-         */
-        domain: {
-          type: String,
-          value: 'default'
-        },
+            messages: {
+              type: Object,
+              readOnly: true
+            },
 
-        /**
-         * The path to directory of `[domain]-[locale].json` files.
-         */
-        messagesUrl: {
-          type: String
-        },
+            _messagesKey: { computed: '_computeMessagesKey(domain)' },
+            _cached: { computed: '_computeCached(messagesUrl, domain, locale)' }
+          },
 
-        messages: {
-          type: Object,
-          readOnly: true
-        },
+          observers: [ '_computeMessages(messagesUrl, domain, locale, _cached)' ],
+        };
+      }
 
-        _messagesKey: { computed: '_computeMessagesKey(domain)' },
-        _cached: { computed: '_computeCached(messagesUrl, domain, locale)' }
-      },
+      debounce(jobName, callback, wait) {
+        this._debouncers = this._debouncers || {};
+        return this._debouncers[jobName] = Polymer.Debouncer.debounce(
+          this._debouncers[jobName], callback, wait, this);
+      }
 
-      observers: [ '_computeMessages(messagesUrl, domain, locale, _cached)' ],
+      _computeMessagesKey(domain) { return `i18n.${domain}`; }
 
-      _computeMessagesKey: (domain) => `i18n.${domain}`,
+      _computeCached(url, domain, locale) {
+        if (url && domain && locale) {
+          if (!this._cache) this._cache = {};
+          if (!this._cache[url]) this._cache[url] = {};
+          if (!this._cache[url][domain]) this._cache[url][domain] = {};
+          return this._cache[url][domain][locale] || null;
+        }
+      }
 
-      _computeCached: function(url, domain, locale) {
-        if (!this._cache) this._cache = {};
-        if (!this._cache[url]) this._cache[url] = {};
-        if (!this._cache[url][domain]) this._cache[url][domain] = {};
-        return this._cache[url][domain][locale] || null;
-      },
-
-      _computeMessages: function(url, domain, locale, cached) {
+      _computeMessages(url, domain, locale, cached) {
         // Ignore empty or null values
         if (!url || !domain || !locale) return;
 
@@ -123,6 +133,8 @@ See docs of [`<f-i18n>`](#f-i18n) element.
           }
         });
       }
-    });
+    }
+    customElements.define(I18nDomain.is, I18nDomain);
+    return I18nDomain;
   })();
 </script>
