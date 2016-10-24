@@ -62,7 +62,10 @@ See docs of [`<f-i18n>`](#f-i18n) element.
             /**
              * Locale being used.
              */
-            locale: String,
+            locale: {
+              type: String,
+              notify: true,
+            },
 
             /**
              * Name of i18n messages group.
