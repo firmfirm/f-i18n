@@ -56,7 +56,10 @@ Element to get and/or display a localized message.
 -->
 <dom-module id="f-i18n">
   <template>
-    <style>:host { display: inline-block; }</style>
+    <style>
+      :host { display: inline-block; }
+      :host([provider]) { display: none; }
+    </style>
     <f-singleton key="[[_messageKey]]" value="{{_value}}"></f-singleton>
     <span hidden$="[[provider]]">[[sanitizeHtml(value)]]</span>
   </template>
@@ -94,7 +97,8 @@ Element to get and/or display a localized message.
            */
           provider: {
             type: Boolean,
-            value: false
+            value: false,
+            reflectToAttribute: true,
           },
 
           /**
