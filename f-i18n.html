@@ -107,7 +107,7 @@ Element to get and/or display a localized message.
           value: {
             type: String,
             notify: true,
-            computed: '_computeValue(_value, placeholder)'
+            computed: '_computeValue(_value, placeholder, domain, msgid)'
           },
 
           /**
@@ -125,9 +125,9 @@ Element to get and/or display a localized message.
       }
     }
 
-    _computeValue(value, placeholder) {
-      if (value) return value;
-      return placeholder;
+    _computeValue(value, placeholder, domain, msgid) {
+      if (!value || !domain || !msgid) return placeholder;
+      return value;
     }
 
     _computeMessageKey(domain, msgid) {
@@ -136,13 +136,11 @@ Element to get and/or display a localized message.
       }
     }
 
-    _mChanged(m) {
-      if (!m) return;
-      let parts = this.m.split('.');
-      if (parts.length > 0) {
-        this.domain = parts.shift();
-        this.msgid = parts.join('.');
-      }
+    _mChanged(m = '') {
+      let parts = m.split('.');
+      this.setProperties(parts.length > 0
+        ? {domain: parts.shift(), msgid: parts.join('.')}
+        : {domain: null, msgid: null});
     }
   }
   customElements.define(FirmFirm.I18n.is, FirmFirm.I18n);
