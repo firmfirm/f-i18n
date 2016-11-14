@@ -46,7 +46,9 @@
       describe('content', () => {
         let span;
 
-        beforeEach(() => span = el.root.querySelector('span'));
+        beforeEach(() => {
+          span = el.root.querySelector('span');
+        });
 
         it('[provider] hides content', () => {
           expect(span.hidden).to.be.false;
@@ -64,6 +66,8 @@
         });
 
         it('shows value, which has priority', () => {
+          el.msgid = "some"; // required for check to pass
+
           s.value = 'sval';
           expect(span.textContent).to.equal('sval');
           el.placeholder = 'place';
@@ -88,6 +92,7 @@
         });
 
         it('equal to singletons value, which has priority', () => {
+          el.msgid = "some"; // required for check to pass
           s.value = 'sval';
           expect(el.value).to.equal('sval');
           el.placeholder = 'place';
