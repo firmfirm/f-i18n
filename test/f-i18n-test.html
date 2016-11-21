@@ -99,6 +99,16 @@
           expect(el.value).to.equal('sval');
         });
 
+        it('replaces params', () => {
+          el.msgid = "some";
+          el.params = {
+            param1: 'val1',
+            param2: 'val2',
+          };
+          s.value = '${param1} some ${param2}';
+          expect(el.value).to.equal('val1 some val2');
+        });
+
       });
 
     });

@@ -107,8 +107,13 @@ Element to get and/or display a localized message.
           value: {
             type: String,
             notify: true,
-            computed: '_computeValue(_value, placeholder, domain, msgid)'
+            computed: '_computeValue(_value, placeholder, domain, msgid, params)'
           },
+
+          /**
+           * Value parameters replacements
+           */
+          params: Object,
 
           /**
            * Message to use until locale is loaded.
@@ -125,9 +130,15 @@ Element to get and/or display a localized message.
       }
     }
 
-    _computeValue(value, placeholder, domain, msgid) {
+    _computeValue(value, placeholder, domain, msgid, params) {
       if (!value || !domain || !msgid) return placeholder;
-      return value;
+      let result = value;
+      if (params) {
+        Object.keys(params).forEach(p => {
+          result = result.replace(`\${${p}}`, params[p]);
+        });
+      }
+      return result;
     }
 
     _computeMessageKey(domain, msgid) {
