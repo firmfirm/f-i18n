@@ -14,5 +14,5 @@ git remote set-url origin "https://${GH_TOKEN}@${GH_REF}"
 git push --follow-tags origin HEAD:master > /dev/null 2>&1
 
 # Push to gh-pages
-npm install -g yo firmfirm/generator-polymer
-echo -e "firmfirm\n\n\n\n" | yo polymer:gh > /dev/null 2>&1
+# npm install -g yo firmfirm/generator-polymer
+# echo -e "firmfirm\n\n\n\n" | yo polymer:gh > /dev/null 2>&1
