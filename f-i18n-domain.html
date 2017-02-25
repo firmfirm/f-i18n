@@ -54,51 +54,44 @@ See docs of [`<f-i18n>`](#f-i18n) element.
 </dom-module>
 <script>
   FirmFirm.I18nDomain = (function () {
-    class I18nDomain extends Polymer.Element {
+    class I18nDomain extends Polymer.LegacyElementMixin(Polymer.Element) {
       static get is() { return 'f-i18n-domain'; }
-      static get config() {
+      static get properties() {
         return {
-          properties: {
-            /**
-             * Locale being used.
-             */
-            locale: {
-              type: String,
-              notify: true,
-            },
-
-            /**
-             * Name of i18n messages group.
-             */
-            domain: {
-              type: String,
-              value: 'default'
-            },
-
-            /**
-             * The path to directory of `[domain]-[locale].json` files.
-             */
-            messagesUrl: {
-              type: String
-            },
-
-            messages: {
-              type: Object,
-              readOnly: true
-            },
-
-            _messagesKey: { computed: '_computeMessagesKey(domain)' },
-            _cached: { computed: '_computeCached(messagesUrl, domain, locale)' }
+          /**
+           * Locale being used.
+           */
+          locale: {
+            type: String,
+            notify: true,
           },
 
-          observers: [ '_computeMessages(messagesUrl, domain, locale, _cached)' ],
+          /**
+           * Name of i18n messages group.
+           */
+          domain: {
+            type: String,
+            value: 'default'
+          },
+
+          /**
+           * The path to directory of `[domain]-[locale].json` files.
+           */
+          messagesUrl: {
+            type: String
+          },
+
+          messages: {
+            type: Object,
+            readOnly: true
+          },
+
+          _messagesKey: { computed: '_computeMessagesKey(domain)' },
+          _cached: { computed: '_computeCached(messagesUrl, domain, locale)' }
         };
       }
-
-      debounce(jobName, callback, wait) {
-        this._debouncers = this._debouncers || {};
-        return this._debouncers[jobName] = Polymer.Debouncer.debounce(
-          this._debouncers[jobName], callback, wait, this);
+      static get observers() {
+        return [ '_computeMessages(messagesUrl, domain, locale, _cached)' ];
       }
 
       _computeMessagesKey(domain) { return `i18n.${domain}`; }

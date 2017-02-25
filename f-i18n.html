@@ -67,67 +67,65 @@ Element to get and/or display a localized message.
 <script>
   FirmFirm.I18n = class I18n extends FBehavior.DomPurify(Polymer.Element) {
     static get is() { return 'f-i18n'; }
-    static get config() {
+    static get properties() {
       return {
-        properties: {
-          /**
-           * The message id (key) of the message.
-           */
-          msgid: String,
+        /**
+         * The message id (key) of the message.
+         */
+        msgid: String,
 
-          /**
-           * `domain` of i18n-domain.
-           */
-          domain: {
-            type: String,
-            value: 'default'
-          },
-
-          /**
-           * Shortcut property for `domain` and `msgid`.
-           * Example: `domain-name.msgid`.
-           */
-          m: {
-            type: String,
-            observer: '_mChanged'
-          },
-
-          /**
-           * If true, the element doesn't display any content.
-           */
-          provider: {
-            type: Boolean,
-            value: false,
-            reflectToAttribute: true,
-          },
-
-          /**
-           * Translated message or placeholder value.
-           */
-          value: {
-            type: String,
-            notify: true,
-            computed: '_computeValue(_value, placeholder, domain, msgid, params)'
-          },
-
-          /**
-           * Value parameters replacements
-           */
-          params: Object,
-
-          /**
-           * Message to use until locale is loaded.
-           */
-          placeholder: {
-            type: String,
-            value: null
-          },
-
-          _value: String,
-
-          _messageKey: { computed: '_computeMessageKey(domain, msgid)' }
+        /**
+         * `domain` of i18n-domain.
+         */
+        domain: {
+          type: String,
+          value: 'default'
         },
-      }
+
+        /**
+         * Shortcut property for `domain` and `msgid`.
+         * Example: `domain-name.msgid`.
+         */
+        m: {
+          type: String,
+          observer: '_mChanged'
+        },
+
+        /**
+         * If true, the element doesn't display any content.
+         */
+        provider: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+        },
+
+        /**
+         * Translated message or placeholder value.
+         */
+        value: {
+          type: String,
+          notify: true,
+          computed: '_computeValue(_value, placeholder, domain, msgid, params)'
+        },
+
+        /**
+         * Value parameters replacements
+         */
+        params: Object,
+
+        /**
+         * Message to use until locale is loaded.
+         */
+        placeholder: {
+          type: String,
+          value: null
+        },
+
+        _value: String,
+
+        _messageKey: { computed: '_computeMessageKey(domain, msgid)' },
+      };
     }
 
     _computeValue(value, placeholder, domain, msgid, params) {
