@@ -8,6 +8,7 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <link rel="import" href="../f-i18n-domain.html">
+    <link rel="import" href="../../finterface-key-value-store/test-helper/fake-store.html">
   </head>
   <body>
 
@@ -33,7 +34,7 @@
         server = sinon.fakeServer.create();
         replace('f-singleton').with('fake-store');
         el = fixture('f-i18n-domain-fixture');
-        singleton = el.root.querySelector('f-singleton');
+        singleton = el.root.querySelector('fake-store');
         PromiseToRetry.ensure = sinon.stub().callsArg(0);
       });
 
