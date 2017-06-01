@@ -130,6 +130,11 @@ Or see the LICENSE file that comes with this code.
       };
     }
 
+    get textContent() {
+      if (!this.value || this.provider) return '';
+      return this.value;
+    }
+
     _computeValue(value, placeholder, domain, msgid, params) {
       if (!value || !domain || !msgid) return placeholder;
       let result = value;
