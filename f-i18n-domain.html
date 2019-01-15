@@ -121,7 +121,7 @@ See docs of [`<f-i18n>`](#f-i18n) element.
             PromiseToRetry.ensure(() => {
               let req = this.$.ajax.generateRequest();
               return req.completes.then(() => _done(req.response))
-                                  .catch((e) => req.status === 404
+                                  .catch((e) => req.status === 404 || req.status === 0
                                     ? _done({})
                                     : Promise.reject(e));
             }, (detail) => console.warn('Failed to fetch locale',
