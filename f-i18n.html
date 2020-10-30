@@ -12,8 +12,13 @@ Or see the LICENSE file that comes with this code.
 <dom-module id="f-i18n">
   <template>
     <style>
-      :host { display: inline-block; }
-      :host([provider]) { display: none; }
+      :host {
+        display: inline-block;
+      }
+
+      :host([provider]) {
+        display: none;
+      }
     </style>
     <f-singleton key="[[_messageKey]]" value="{{_value}}"></f-singleton>
     <span hidden$="[[provider]]">[[sanitizeHtml(value)]]</span>
@@ -136,7 +141,7 @@ Or see the LICENSE file that comes with this code.
     }
 
     _computeValue(value, placeholder, domain, msgid, params) {
-      if (!value || !domain || !msgid) return placeholder;
+      if (!value || !domain || !msgid) return '';
       let result = value;
       if (params) {
         Object.keys(params).forEach(p => {
@@ -155,8 +160,8 @@ Or see the LICENSE file that comes with this code.
     _mChanged(m = '') {
       let parts = m.split('.');
       this.setProperties(parts.length > 0
-        ? {domain: parts.shift(), msgid: parts.join('.')}
-        : {domain: null, msgid: null});
+        ? { domain: parts.shift(), msgid: parts.join('.') }
+        : { domain: null, msgid: null });
     }
   }
   customElements.define(FirmFirm.I18n.is, FirmFirm.I18n);
